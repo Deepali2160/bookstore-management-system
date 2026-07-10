@@ -6,6 +6,7 @@ import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/api/books")
@@ -17,6 +18,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public BookResponse addBook(@Valid @RequestBody BookRequest request) {
         return bookService.addBook(request);
@@ -27,11 +29,13 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+
     @GetMapping("/{id}")
     public BookResponse getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public BookResponse updateBook(
             @PathVariable Long id,
@@ -40,6 +44,7 @@ public class BookController {
         return bookService.updateBook(id, request);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
