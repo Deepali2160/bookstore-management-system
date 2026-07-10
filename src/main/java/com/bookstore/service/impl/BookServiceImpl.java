@@ -8,6 +8,8 @@ import com.bookstore.service.BookService;
 import org.springframework.stereotype.Service;
 import com.bookstore.entity.Book;
 import com.bookstore.exception.DuplicateResourceException;
+import com.bookstore.entity.Book;
+import com.bookstore.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -39,12 +41,21 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponse> getAllBooks() {
-        return null;
+
+        return bookRepository.findAll()
+                .stream()
+                .map(bookMapper::toResponse)
+                .toList();
     }
 
     @Override
     public BookResponse getBookById(Long id) {
-        return null;
+
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Book not found with id: " + id));
+
+        return bookMapper.toResponse(book);
     }
 
     @Override

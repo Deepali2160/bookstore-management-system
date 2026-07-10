@@ -5,6 +5,7 @@ import com.bookstore.dto.response.BookResponse;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -19,5 +20,15 @@ public class BookController {
     @PostMapping
     public BookResponse addBook(@Valid @RequestBody BookRequest request) {
         return bookService.addBook(request);
+    }
+
+    @GetMapping
+    public List<BookResponse> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
+    @GetMapping("/{id}")
+    public BookResponse getBookById(@PathVariable Long id) {
+        return bookService.getBookById(id);
     }
 }
