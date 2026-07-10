@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.bookstore.entity.User;
 import com.bookstore.exception.DuplicateResourceException;
+import com.bookstore.enums.Role;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -41,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
+        user.setRole(Role.CUSTOMER);
 
         // Save user
         userRepository.save(user);
