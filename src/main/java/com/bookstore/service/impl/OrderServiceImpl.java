@@ -148,4 +148,14 @@ public class OrderServiceImpl implements OrderService {
 
         return orderMapper.toResponse(order);
     }
+
+    @Override
+    public List<OrderResponse> getAllOrders() {
+
+        List<Order> orders = orderRepository.findAll();
+
+        return orders.stream()
+                .map(orderMapper::toResponse)
+                .toList();
+    }
 }

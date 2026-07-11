@@ -40,4 +40,11 @@ public class OrderController {
 
         return orderService.getOrderById(id);
     }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<OrderResponse> getAllOrders() {
+
+        return orderService.getAllOrders();
+    }
 }
