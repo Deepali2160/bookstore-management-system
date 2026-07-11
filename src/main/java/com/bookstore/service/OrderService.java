@@ -9,5 +9,6 @@ public interface OrderService {
 
     OrderResponse placeOrder(PlaceOrderRequest request);
     List<OrderResponse> getMyOrders();
+    OrderResponse getOrderById(Long id);
 
 }

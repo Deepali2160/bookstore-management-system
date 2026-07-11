@@ -122,4 +122,30 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderMapper::toResponse)
                 .toList();
     }
+
+    @Override
+    public OrderResponse getOrderById(Long id) {
+
+        // Get logged-in user
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        // Find order
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Order not found"));
+
+        // Check ownership
+        if (!order.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Order not found");
+        }
+
+        return orderMapper.toResponse(order);
+    }
 }

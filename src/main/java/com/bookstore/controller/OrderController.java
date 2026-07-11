@@ -33,4 +33,11 @@ public class OrderController {
 
         return orderService.getMyOrders();
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public OrderResponse getOrderById(@PathVariable Long id) {
+
+        return orderService.getOrderById(id);
+    }
 }
