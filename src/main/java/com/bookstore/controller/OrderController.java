@@ -1,6 +1,7 @@
 package com.bookstore.controller;
 
 import com.bookstore.dto.request.PlaceOrderRequest;
+import com.bookstore.dto.request.UpdateOrderStatusRequest;
 import com.bookstore.dto.response.OrderResponse;
 import com.bookstore.service.OrderService;
 import jakarta.validation.Valid;
@@ -46,5 +47,14 @@ public class OrderController {
     public List<OrderResponse> getAllOrders() {
 
         return orderService.getAllOrders();
+    }
+
+    @PutMapping("/admin/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public OrderResponse updateOrderStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateOrderStatusRequest request) {
+
+        return orderService.updateOrderStatus(id, request);
     }
 }

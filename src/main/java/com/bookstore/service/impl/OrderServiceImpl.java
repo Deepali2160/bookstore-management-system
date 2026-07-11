@@ -1,6 +1,7 @@
 package com.bookstore.service.impl;
 
 import com.bookstore.dto.request.PlaceOrderRequest;
+import com.bookstore.dto.request.UpdateOrderStatusRequest;
 import com.bookstore.dto.response.OrderResponse;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Order;
@@ -157,5 +158,22 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream()
                 .map(orderMapper::toResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public OrderResponse updateOrderStatus(
+            Long id,
+            UpdateOrderStatusRequest request) {
+
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Order not found"));
+
+        order.setOrderStatus(request.getOrderStatus());
+
+        orderRepository.save(order);
+
+        return orderMapper.toResponse(order);
     }
 }

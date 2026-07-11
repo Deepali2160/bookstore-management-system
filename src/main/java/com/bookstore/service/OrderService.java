@@ -1,6 +1,7 @@
 package com.bookstore.service;
 
 import com.bookstore.dto.request.PlaceOrderRequest;
+import com.bookstore.dto.request.UpdateOrderStatusRequest;
 import com.bookstore.dto.response.OrderResponse;
 
 import java.util.List;
@@ -11,5 +12,6 @@ public interface OrderService {
     List<OrderResponse> getMyOrders();
     OrderResponse getOrderById(Long id);
     List<OrderResponse> getAllOrders();
+    OrderResponse updateOrderStatus(Long id, UpdateOrderStatusRequest request);
 
 }
