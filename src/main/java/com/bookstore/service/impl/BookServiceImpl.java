@@ -9,7 +9,6 @@ import com.bookstore.service.BookService;
 import org.springframework.stereotype.Service;
 import com.bookstore.entity.Book;
 import com.bookstore.exception.DuplicateResourceException;
-import com.bookstore.entity.Book;
 import com.bookstore.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
