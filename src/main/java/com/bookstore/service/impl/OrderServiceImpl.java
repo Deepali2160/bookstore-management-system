@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -98,5 +99,27 @@ public class OrderServiceImpl implements OrderService {
         bookRepository.save(book);
 
         return orderMapper.toResponse(order);
+    }
+
+    @Override
+    public List<OrderResponse> getMyOrders() {
+
+        // Get logged-in user
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        // Fetch orders of logged-in user
+        List<Order> orders = orderRepository.findByUser(user);
+
+        // Convert entities to DTOs
+        return orders.stream()
+                .map(orderMapper::toResponse)
+                .toList();
     }
 }

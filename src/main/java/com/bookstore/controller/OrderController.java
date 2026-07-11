@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
@@ -23,5 +25,12 @@ public class OrderController {
             @Valid @RequestBody PlaceOrderRequest request) {
 
         return orderService.placeOrder(request);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public List<OrderResponse> getMyOrders() {
+
+        return orderService.getMyOrders();
     }
 }
