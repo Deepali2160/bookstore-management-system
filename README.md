@@ -7,7 +7,7 @@
 ![Maven](https://img.shields.io/badge/Build-Maven-blue)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
-A secure and scalable REST API for an online bookstore built using **Spring Boot**, **Spring Security**, **JWT Authentication**, and **MySQL**. The application enables customers to browse and purchase books while allowing administrators to manage inventory and process orders.
+A secure and scalable REST API for an online bookstore built using **Spring Boot**, **Spring Security**, **JWT Authentication**, and **MySQL**. The application enables customers to browse and purchase books, write reviews, place orders, while allowing administrators to manage inventory, reviews, and process orders.
 
 ---
 
@@ -37,6 +37,8 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Password Encryption using BCrypt
 - Role-Based Authorization (ADMIN & CUSTOMER)
 
+---
+
 ## 📚 Book Management
 
 - Add Book
@@ -50,6 +52,17 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Pagination
 - Sorting
 
+---
+
+## ⭐ Review Management
+
+- Add Review
+- View Reviews by Book
+- One Review per Customer per Book
+- Admin can Delete Reviews
+
+---
+
 ## 📦 Order Management
 
 - Place Order
@@ -60,12 +73,15 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Automatic Inventory Stock Update
 - Order Pagination
 - Order Sorting
+- Role-Based Order Access
+
+---
 
 ## ⚙ Additional Features
 
 - Global Exception Handling
 - DTO Pattern
-- MapStruct for Entity-DTO Mapping
+- Custom Mapper Classes for Entity-DTO Mapping
 - Jakarta Bean Validation
 - Swagger (OpenAPI) Documentation
 - Unit Testing using JUnit 5 & Mockito
@@ -80,7 +96,6 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Spring Data JPA
 - MySQL
 - JWT (JSON Web Token)
-- MapStruct
 - Lombok
 - Maven
 - Swagger (OpenAPI)
@@ -118,7 +133,6 @@ src
 ├── main
 │   ├── java
 │   │   └── com.bookstore
-│   │       ├── config
 │   │       ├── controller
 │   │       ├── dto
 │   │       │   ├── request
@@ -132,7 +146,7 @@ src
 │   │       │   └── jwt
 │   │       ├── service
 │   │       │   └── impl
-│   │       └── util
+│   │       └── config
 │   └── resources
 │       ├── application.properties
 │       └── data.sql
@@ -144,6 +158,8 @@ src
 # 🔐 Security
 
 The application uses **Spring Security** with **JWT Authentication** to secure protected endpoints.
+
+Passwords are securely stored using **BCrypt hashing**, and JWT tokens are used for stateless authentication and authorization.
 
 ### Authentication Flow
 
@@ -157,8 +173,8 @@ The application uses **Spring Security** with **JWT Authentication** to secure p
 
 | Role | Permissions |
 |------|-------------|
-| ADMIN | Manage books, view all orders, update order status |
-| CUSTOMER | Browse books, place orders, view own orders |
+| ADMIN | Manage books, manage reviews, view all orders, update order status |
+| CUSTOMER | Browse books, place orders, view own orders, add reviews |
 
 ---
 
@@ -182,6 +198,7 @@ http://localhost:8080/swagger-ui/index.html
 - books
 - orders
 - order_items
+- reviews
 
 ---
 
@@ -232,19 +249,26 @@ http://localhost:8080
 The project includes:
 
 - Unit Testing using JUnit 5
-- Mockito for Mocking
-- Postman Collection for API Testing
+- Mockito for Mocking Dependencies
+- API Testing using Swagger UI
+- API Testing using Postman
 
-All core service-layer functionalities are covered with unit tests.
+Unit tests have been implemented for the core service layer, including:
+
+- BookService
+- OrderService
+- ReviewService
 
 ---
 
 # 📌 Future Enhancements
 
-- ⭐ Book Reviews & Ratings
-- ⭐ Payment Gateway Integration (Stripe / PayPal)
+- ⭐ Shopping Cart Module
+- ⭐ Payment Gateway Integration (Stripe / Razorpay)
+- ⭐ Email Notifications
 - ⭐ Docker Support
 - ⭐ Cloud Deployment (AWS / Render / Railway)
+- ⭐ Wishlist Feature
 
 ---
 
@@ -257,4 +281,4 @@ All core service-layer functionalities are covered with unit tests.
 
 ---
 
-⭐ If you found this project helpful, consider giving it a star on GitHub!
+⭐ If you found this project helpful, consider giving it a ⭐ on GitHub!
