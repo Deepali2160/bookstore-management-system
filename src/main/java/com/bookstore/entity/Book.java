@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Table(name = "books")
 @Getter
@@ -50,4 +51,7 @@ public class Book extends BaseEntity {
 
     @OneToMany(mappedBy = "book")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 }

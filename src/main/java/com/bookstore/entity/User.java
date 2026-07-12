@@ -8,8 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+
 
 @Entity
 @Table(name = "users")
@@ -38,4 +37,7 @@ public class User extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 }
