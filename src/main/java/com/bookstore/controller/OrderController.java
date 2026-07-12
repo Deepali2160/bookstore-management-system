@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 @RestController
@@ -44,9 +46,18 @@ public class OrderController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<OrderResponse> getAllOrders() {
+    public Page<OrderResponse> getAllOrders(
 
-        return orderService.getAllOrders();
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return orderService.getAllOrders(
+                page,
+                size,
+                sortBy,
+                direction);
     }
 
     @PutMapping("/admin/{id}/status")

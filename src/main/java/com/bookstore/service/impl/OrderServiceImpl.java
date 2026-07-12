@@ -21,6 +21,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -151,13 +157,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponse> getAllOrders() {
+    public Page<OrderResponse> getAllOrders(
+            int page,
+            int size,
+            String sortBy,
+            String direction) {
 
-        List<Order> orders = orderRepository.findAll();
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
 
-        return orders.stream()
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Order> orders = orderRepository.findAll(pageable);
+
+        List<OrderResponse> responses = orders.getContent()
+                .stream()
                 .map(orderMapper::toResponse)
                 .toList();
+
+        return new PageImpl<>(
+                responses,
+                pageable,
+                orders.getTotalElements()
+        );
     }
 
     @Override
