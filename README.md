@@ -297,6 +297,12 @@ The project includes:
 - Review Service
 
 ---
+## 📖 Additional Documentation
+
+- **SETUP.md** – Project setup and configuration guide.
+- **SAMPLE_REQUESTS.md** – Ready-to-use sample API requests for testing.
+
+---
 
 # 📌 Future Enhancements
 
