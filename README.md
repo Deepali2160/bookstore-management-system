@@ -7,23 +7,24 @@
 ![Maven](https://img.shields.io/badge/Build-Maven-blue)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
-A secure and scalable REST API for an online bookstore built using **Spring Boot**, **Spring Security**, **JWT Authentication**, and **MySQL**. The application enables customers to browse and purchase books, write reviews, place orders, while allowing administrators to manage inventory, reviews, and process orders.
+A secure and scalable REST API for an online bookstore built using **Spring Boot**, **Spring Security**, **JWT Authentication**, and **MySQL**. The application enables customers to browse books, write reviews, and place orders, while allowing administrators to manage books, reviews, inventory, and customer orders.
 
 ---
 
 # 📑 Table of Contents
 
-- [🚀 Features](#-features)
-- [🛠 Tech Stack](#-tech-stack)
-- [🏗 Architecture](#-architecture)
-- [📂 Project Structure](#-project-structure)
-- [🔐 Security](#-security)
-- [📄 API Documentation](#-api-documentation)
-- [🗄 Database](#-database)
-- [▶ Running the Project](#-running-the-project)
-- [🧪 Testing](#-testing)
-- [📌 Future Enhancements](#-future-enhancements)
-- [👩‍💻 Author](#-author)
+- 🚀 Features
+- 🛠 Tech Stack
+- 🏗 Architecture
+- 📂 Project Structure
+- 🔐 Security
+- 📄 API Documentation
+- 🗄 Database
+- ▶ Running the Project
+- 🔑 Default Admin Credentials
+- 🧪 Testing
+- 📌 Future Enhancements
+- 👩‍💻 Author
 
 ---
 
@@ -59,7 +60,7 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Add Review
 - View Reviews by Book
 - One Review per Customer per Book
-- Admin can Delete Reviews
+- Delete Review (Admin Only)
 
 ---
 
@@ -68,11 +69,10 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Place Order
 - View Customer Orders
 - View Order by ID
-- Admin: View All Orders
-- Admin: Update Order Status
+- View All Orders (Admin)
+- Update Order Status (Admin)
 - Automatic Inventory Stock Update
-- Order Pagination
-- Order Sorting
+- Pagination & Sorting
 - Role-Based Order Access
 
 ---
@@ -81,9 +81,9 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 
 - Global Exception Handling
 - DTO Pattern
-- Custom Mapper Classes for Entity-DTO Mapping
+- Custom Mapper Classes
 - Jakarta Bean Validation
-- Swagger (OpenAPI) Documentation
+- Swagger (OpenAPI)
 - Unit Testing using JUnit 5 & Mockito
 
 ---
@@ -133,6 +133,7 @@ src
 ├── main
 │   ├── java
 │   │   └── com.bookstore
+│   │       ├── config
 │   │       ├── controller
 │   │       ├── dto
 │   │       │   ├── request
@@ -146,10 +147,9 @@ src
 │   │       │   └── jwt
 │   │       ├── service
 │   │       │   └── impl
-│   │       └── config
+│   │       └── util
 │   └── resources
-│       ├── application.properties
-│       └── data.sql
+│       └── application.properties
 └── test
 ```
 
@@ -157,32 +157,32 @@ src
 
 # 🔐 Security
 
-The application uses **Spring Security** with **JWT Authentication** to secure protected endpoints.
+The application uses **Spring Security** with **JWT Authentication**.
 
-Passwords are securely stored using **BCrypt hashing**, and JWT tokens are used for stateless authentication and authorization.
+Passwords are encrypted using **BCrypt**, and JWT tokens are used for stateless authentication and authorization.
 
 ### Authentication Flow
 
-1. Register a new user.
+1. Register a new customer.
 2. Login using email and password.
 3. Receive a JWT token.
 4. Include the token in the `Authorization` header.
-5. Access secured APIs based on the assigned role.
+5. Access protected APIs based on your role.
 
 ### User Roles
 
 | Role | Permissions |
 |------|-------------|
-| ADMIN | Manage books, manage reviews, view all orders, update order status |
+| ADMIN | Manage books, reviews, inventory, view all orders, update order status |
 | CUSTOMER | Browse books, place orders, view own orders, add reviews |
 
 ---
 
 # 📄 API Documentation
 
-Swagger UI is available after running the application:
+Swagger UI is available after running the project:
 
-```text
+```
 http://localhost:8080/swagger-ui/index.html
 ```
 
@@ -196,51 +196,87 @@ http://localhost:8080/swagger-ui/index.html
 
 - users
 - books
+- reviews
 - orders
 - order_items
-- reviews
 
 ---
 
 # ▶ Running the Project
 
-### Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Deepali2160/bookstore-management-system.git
 ```
 
-### Navigate to the Project
+## 2. Navigate to the Project
 
 ```bash
 cd bookstore-management-system
 ```
 
-### Configure the Database
+## 3. Create Database
 
-Update the database configuration in:
+Execute the following command in MySQL:
 
-```text
+```sql
+CREATE DATABASE bookstore_db;
+```
+
+## 4. Configure Database
+
+Update your MySQL username and password in:
+
+```
 src/main/resources/application.properties
 ```
 
-### Build the Project
+Example:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/bookstore_db
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+```
+
+## 5. Build the Project
 
 ```bash
 mvn clean install
 ```
 
-### Run the Application
+## 6. Run the Project
 
 ```bash
 mvn spring-boot:run
 ```
 
-The application will be available at:
+Application URL:
 
-```text
+```
 http://localhost:8080
 ```
+
+---
+
+# 🔑 Default Admin Credentials
+
+A default administrator account is automatically created when the application runs for the first time.
+
+**Email**
+
+```
+admin@bookstore.com
+```
+
+**Password**
+
+```
+admin123
+```
+
+If the admin already exists, the application skips creating it.
 
 ---
 
@@ -253,22 +289,23 @@ The project includes:
 - API Testing using Swagger UI
 - API Testing using Postman
 
-Unit tests have been implemented for the core service layer, including:
+### Unit Tests Implemented
 
-- BookService
-- OrderService
-- ReviewService
+- Authentication Service
+- Book Service
+- Order Service
+- Review Service
 
 ---
 
 # 📌 Future Enhancements
 
 - ⭐ Shopping Cart Module
+- ⭐ Wishlist Feature
 - ⭐ Payment Gateway Integration (Stripe / Razorpay)
 - ⭐ Email Notifications
 - ⭐ Docker Support
 - ⭐ Cloud Deployment (AWS / Render / Railway)
-- ⭐ Wishlist Feature
 
 ---
 
@@ -276,8 +313,13 @@ Unit tests have been implemented for the core service layer, including:
 
 **Deepali Mundra**
 
-- **GitHub:** https://github.com/Deepali2160
-- **Project Repository:** https://github.com/Deepali2160/bookstore-management-system
+**GitHub**
+
+https://github.com/Deepali2160
+
+**Project Repository**
+
+https://github.com/Deepali2160/bookstore-management-system
 
 ---
 
