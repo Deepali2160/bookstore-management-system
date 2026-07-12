@@ -65,10 +65,10 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 
 - Global Exception Handling
 - DTO Pattern
-- MapStruct Mapper
-- Swagger API Documentation
-- Jakarta Validation
-- Unit Testing using JUnit & Mockito
+- MapStruct for Entity-DTO Mapping
+- Jakarta Bean Validation
+- Swagger (OpenAPI) Documentation
+- Unit Testing using JUnit 5 & Mockito
 
 ---
 
@@ -80,9 +80,9 @@ A secure and scalable REST API for an online bookstore built using **Spring Boot
 - Spring Data JPA
 - MySQL
 - JWT (JSON Web Token)
-- Maven
-- Lombok
 - MapStruct
+- Lombok
+- Maven
 - Swagger (OpenAPI)
 - JUnit 5
 - Mockito
@@ -143,22 +143,22 @@ src
 
 # 🔐 Security
 
-The application uses **Spring Security** with **JWT Authentication** to secure all protected endpoints.
+The application uses **Spring Security** with **JWT Authentication** to secure protected endpoints.
 
 ### Authentication Flow
 
-- Register a new user
-- Login using email and password
-- Receive JWT Token
-- Pass JWT Token in the Authorization Header
-- Access secured APIs
+1. Register a new user.
+2. Login using email and password.
+3. Receive a JWT token.
+4. Include the token in the `Authorization` header.
+5. Access secured APIs based on the assigned role.
 
-### Roles
+### User Roles
 
 | Role | Permissions |
 |------|-------------|
-| ADMIN | Manage Books, View All Orders, Update Order Status |
-| CUSTOMER | Browse Books, Place Orders, View Own Orders |
+| ADMIN | Manage books, view all orders, update order status |
+| CUSTOMER | Browse books, place orders, view own orders |
 
 ---
 
@@ -174,11 +174,7 @@ http://localhost:8080/swagger-ui/index.html
 
 # 🗄 Database
 
-Database Used:
-
-```text
-MySQL
-```
+**Database:** MySQL
 
 ### Main Tables
 
@@ -191,39 +187,39 @@ MySQL
 
 # ▶ Running the Project
 
-## Clone Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/Deepali2160/bookstore-management-system.git
 ```
 
-## Navigate to Project
+### Navigate to the Project
 
 ```bash
 cd bookstore-management-system
 ```
 
-## Configure Database
+### Configure the Database
 
-Update the MySQL configuration in:
+Update the database configuration in:
 
 ```text
 src/main/resources/application.properties
 ```
 
-## Build Project
+### Build the Project
 
 ```bash
 mvn clean install
 ```
 
-## Run Application
+### Run the Application
 
 ```bash
 mvn spring-boot:run
 ```
 
-The application will start on:
+The application will be available at:
 
 ```text
 http://localhost:8080
@@ -235,31 +231,20 @@ http://localhost:8080
 
 The project includes:
 
-- JUnit 5
-- Mockito
-- Postman API Testing
+- Unit Testing using JUnit 5
+- Mockito for Mocking
+- Postman Collection for API Testing
 
-All core service layer functionalities are covered with unit tests.
-
----
-
-# 📸 Screenshots
-
-> Screenshots will be added after project completion.
-
-- Swagger UI
-- Login API
-- Books API
-- Orders API
+All core service-layer functionalities are covered with unit tests.
 
 ---
 
 # 📌 Future Enhancements
 
 - ⭐ Book Reviews & Ratings
-- ⭐ Payment Gateway Integration (Stripe/PayPal)
+- ⭐ Payment Gateway Integration (Stripe / PayPal)
 - ⭐ Docker Support
-- ⭐ Cloud Deployment (Render/AWS)
+- ⭐ Cloud Deployment (AWS / Render / Railway)
 
 ---
 
@@ -267,14 +252,9 @@ All core service layer functionalities are covered with unit tests.
 
 **Deepali Mundra**
 
-GitHub:
-
-https://github.com/Deepali2160
-
-Project Repository:
-
-https://github.com/Deepali2160/bookstore-management-system
+- **GitHub:** https://github.com/Deepali2160
+- **Project Repository:** https://github.com/Deepali2160/bookstore-management-system
 
 ---
 
-## ⭐ If you found this project helpful, don't forget to star the repository!
+⭐ If you found this project helpful, consider giving it a star on GitHub!
